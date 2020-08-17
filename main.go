@@ -50,9 +50,9 @@ func newPool() *redis.Pool {
 	return &redis.Pool{
 
 		// Maximum number of idle connections in the pool.
-		MaxIdle: 80,
+		MaxIdle: 50,
 		// max number of connections
-		MaxActive: 12000,
+		MaxActive: 1000,
 		// Dial is an application supplied function for creating and
 		// configuring a connection.
 		Dial: func() (redis.Conn, error) {
