@@ -40,7 +40,7 @@ const (
 
 //AddLocation adds location to redis
 func AddLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-	fmt.Println("Adding Location...")
+	fmt.Println("Adding location...")
 
 	var user UserLocation
 	rClient := getRedisClient()
@@ -51,7 +51,7 @@ func AddLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Param
 	}
 
 	if isValidLocationType(user.LocationType) {
-		fmt.Println("Location Added!")
+		fmt.Println("Location added!")
 
 		// Add new location
 		// You can save locations in another db
