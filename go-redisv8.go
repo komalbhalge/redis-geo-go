@@ -57,7 +57,7 @@ func setVal(client *redis.Client) {
 }
 func saveFile(client *redis.Client) string {
 
-	content, err := ioutil.ReadFile("files/img2.png")
+	content, err := ioutil.ReadFile("files/image1.png")
 	key := "file"
 	if err != nil {
 		log.Fatal(err)
