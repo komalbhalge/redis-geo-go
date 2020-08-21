@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	geo "github.com/komalbhalge/redis-geo-go/geo"
 )
 
 //UserLocation holds user data along with location params
@@ -18,7 +19,7 @@ type UserLocation struct {
 }
 
 //SerachBody is request params for a search query
-type SerachBody struct {
+type SearchReqBody struct {
 	Lat          float64      `json:"lat"`
 	Lng          float64      `json:"lng"`
 	LocationType LocationType `json:"locationtype"`
@@ -68,17 +69,17 @@ func AddLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Param
 func SearchLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	fmt.Println("AddLocation...")
 
-	var body SerachBody
+	var reqBody SearchReqBody
 
-	if err := json.NewDecoder(req.Body).Decode(&body); err != nil {
+	if err := json.NewDecoder(req.Body).Decode(&reqBody); err != nil {
 		log.Printf("could not decode request: %v", err)
 		http.Error(res, "could not decode request", http.StatusInternalServerError)
 		return
 	}
 
-	rClient := getRedisClient()
+	rClient := geo.GetRedisClient()
 
-	users := rClient.SearchUsers(body)
+	users := rClient.SearchUsers(reqBody)
 	data, err := json.Marshal(users)
 	if err != nil {
 		fmt.Println("Error: ", err.Error())

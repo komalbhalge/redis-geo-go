@@ -47,7 +47,7 @@ func (c *RedisClient) RemoveUserLocation(id string) {
 	c.ZRem(ctx, key, id)
 }
 
-func (c *RedisClient) SearchUsers(req SerachBody) []redis.GeoLocation {
+func (c *RedisClient) SearchUsers(req SearchReqBody) []redis.GeoLocation {
 	/*
 		WITHDIST: Also return the distance of the returned items from    the specified center. The distance is returned in the same unit as the unit specified as the radius argument of the command.
 
