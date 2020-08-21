@@ -1,13 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/go-redis/redis"
 	"github.com/julienschmidt/httprouter"
-	geo "github.com/komalbhalge/redis-geo-go/geo"
+	api "github.com/komalbhalge/redis-geo-go/api"
 )
 
 //UserLocation holds user data along with location params
@@ -27,6 +29,8 @@ type SearchReqBody struct {
 	Radius       float64      `json:"radius,omitempty"`
 }
 
+var ctx = context.Background()
+
 //LocationType use to identify type of location
 type LocationType int
 
@@ -39,12 +43,24 @@ const (
 	MONEYCHANGER
 )
 
+func rClient() *redis.Client {
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	pong, err := rdb.Ping(ctx).Result()
+	fmt.Println(pong, err)
+	return rdb
+}
+
 //AddLocation adds location to redis
 func AddLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	fmt.Println("Adding location...")
 
 	var user UserLocation
-	rClient := geo.GetRedisClient()
+	rClient := api.GetRedisClient()
 	if err := json.NewDecoder(req.Body).Decode(&user); err != nil {
 		log.Printf("could not decode request: %v", err)
 		http.Error(res, "could not decode request", http.StatusInternalServerError)
@@ -77,7 +93,7 @@ func SearchLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Pa
 		return
 	}
 
-	rClient := geo.GetRedisClient()
+	rClient := api.GetRedisClient()
 
 	users := rClient.SearchUsers(reqBody)
 	data, err := json.Marshal(users)
