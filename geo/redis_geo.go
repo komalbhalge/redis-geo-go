@@ -18,7 +18,7 @@ For this basic implementation GetRedisClient will be called from two endpoints b
 var once sync.Once
 var redisClient *RedisClient
 
-func getRedisClient() *RedisClient {
+func GetRedisClient() *RedisClient {
 	once.Do(func() {
 		client := redis.NewClient(&redis.Options{
 			Addr:     "localhost:6379",

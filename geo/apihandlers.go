@@ -43,7 +43,7 @@ func AddLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Param
 	fmt.Println("Adding location...")
 
 	var user UserLocation
-	rClient := getRedisClient()
+	rClient := geo.GetRedisClient()
 	if err := json.NewDecoder(req.Body).Decode(&user); err != nil {
 		log.Printf("could not decode request: %v", err)
 		http.Error(res, "could not decode request", http.StatusInternalServerError)
