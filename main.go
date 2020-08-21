@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	geo "github.com/komalbhalge/redis-geo-go/geo"
+	api "github.com/komalbhalge/redis-geo-go/api"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 }
 func setupRoutes() *httprouter.Router {
 	router := httprouter.New()
-	router.POST("/addlocation", geo.AddLocation)
-	router.POST("/searchLocation", geo.SearchLocation)
+	router.POST("/addlocation", api.AddLocation)
+	router.POST("/searchLocation", api.SearchLocation)
 	return router
 }

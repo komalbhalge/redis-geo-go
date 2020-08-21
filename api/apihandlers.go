@@ -104,6 +104,7 @@ func SearchLocation(res http.ResponseWriter, req *http.Request, ps httprouter.Pa
 	fmt.Println("All Users:", string(data))
 	return
 }
+
 func isValidLocationType(locationtype LocationType) bool {
 	var types = []LocationType{
 		ATM,
