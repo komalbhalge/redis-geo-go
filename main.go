@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	api "github.com/komalbhalge/redis-geo-go/api"
+	kmt "https://github.com/komalbhalge/redis-geo-go/api"
+	api "github.com/komalbhalge/redis-geo-go/geo"
 )
 
 func main() {

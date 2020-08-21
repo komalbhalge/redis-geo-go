@@ -7,9 +7,10 @@ import (
 	"log"
 	"net/http"
 
+	api "github.com/komalbhalge/redis-geo-go/api"
+
 	"github.com/go-redis/redis"
 	"github.com/julienschmidt/httprouter"
-	api "github.com/komalbhalge/redis-geo-go/api"
 )
 
 //UserLocation holds user data along with location params
