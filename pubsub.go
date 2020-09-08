@@ -16,7 +16,7 @@ type Pubsub struct {
 	topicMapClients stringMapChanList
 }
 
-//Sub: Subscribe channels, the channels could be a list of channels name
+//Subscribe : Subscribe channels, the channels could be a list of channels name
 //     The channel name could be any, without define in server
 func (p *Pubsub) Subscribe(topics ...string) chan interface{} {
 	//init new chan using capacity as channel buffer
@@ -35,12 +35,12 @@ func (p *Pubsub) updateTopicMapClient(clientChan chan interface{}, topics []stri
 	p.clientMapTopics[clientChan] = topics
 }
 
-//AddSubscription:  Add a new topic subscribe to specific client channel.
+//AddSubscription :  Add a new topic subscribe to specific client channel.
 func (p *Pubsub) AddSubscription(clientChan chan interface{}, topics ...string) {
 	p.updateTopicMapClient(clientChan, topics)
 }
 
-//RemoveSubscription: Remove sub topic list on specific chan
+//RemoveSubscription : Remove sub topic list on specific chan
 func (p *Pubsub) RemoveSubscription(clientChan chan interface{}, topics ...string) {
 
 	for _, topic := range topics {
@@ -69,7 +69,7 @@ func (p *Pubsub) RemoveSubscription(clientChan chan interface{}, topics ...strin
 	}
 }
 
-//Publish: Publish a content to a list of channels
+//Publish : Publish a content to a list of channels
 //         The content could be any type.
 func (p *Pubsub) Publish(content interface{}, topics ...string) {
 	for _, topic := range topics {
@@ -83,7 +83,7 @@ func (p *Pubsub) Publish(content interface{}, topics ...string) {
 	}
 }
 
-// Create a pubsub with expect init size, but the size could be extend.
+//NewPubsub Create a pubsub with expect init size, but the size could be extend.
 func NewPubsub(initChanCapacity int) *Pubsub {
 	initClientMapTopics := make(chanMapStringList)
 	initTopicMapClients := make(stringMapChanList)

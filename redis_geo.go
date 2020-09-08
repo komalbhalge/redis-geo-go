@@ -2,9 +2,11 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"sync"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/julienschmidt/httprouter"
 	"golang.org/x/exp/errors/fmt"
 )
 
@@ -78,4 +80,15 @@ func (c *RedisClient) SearchUsers(req SearchReqBody) []redis.GeoLocation {
 		Sort:        "ASC",
 	}).Result()
 	return res
+}
+func initRedisGeo() {
+	router := setupRoutes()
+	log.Println("Server started to accept request in 8080 port.")
+	http.ListenAndServe(":8080", router)
+}
+func setupRoutes() *httprouter.Router {
+	router := httprouter.New()
+	router.POST("/addlocation", AddLocation)
+	router.POST("/searchLocation", SearchLocation)
+	return router
 }
