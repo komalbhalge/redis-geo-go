@@ -220,6 +220,7 @@ func main() {
 	http.Handle("/", http.HandlerFunc(handler))
 	http.Handle("/addnotification/", http.HandlerFunc(b.addNotification2))
 
+	fmt.Println("Started listening to: 8000")
 	// Start the server and listen forever on port 8000.
 	http.ListenAndServe(":8000", nil)
 }
